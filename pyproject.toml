@@ -7,7 +7,7 @@ no-binary = [ ":none:" ]
 
 [tool.poetry]
 name = "repomaestro"
-version = "0.9.0-pre.0"
+version = "0.10.0"
 description = "Code repositories conductor"
 license = "Apache-2.0"
 authors = [ "Cliffano Subagio <cliffano@gmail.com>" ]
@@ -22,19 +22,19 @@ classifiers = [
   "Operating System :: OS Independent"
 ]
 
-[[tool.poetry.packages]]
-include = "repomaestro"
+  [[tool.poetry.packages]]
+  include = "repomaestro"
 
-[tool.poetry.scripts]
-repomaestro = "repomaestro:cli"
+  [tool.poetry.scripts]
+  repomaestro = "repomaestro:cli"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-click = "^8.1.7"
-conflog = "^2.0.1"
-Jinja2 = "^3.1.2"
-PyGithub = "^2.5.0"
-PyYAML = "^6.0.2"
+  [tool.poetry.dependencies]
+  python = "^3.10"
+  click = "^8.1.7"
+  conflog = "^2.0.1"
+  Jinja2 = "^3.1.2"
+  PyGithub = "^2.5.0"
+  PyYAML = "^6.0.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.10.0"
@@ -43,7 +43,7 @@ wheel = "^0.44.0"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.6.4"
-numpy = "1.26.4" # https://stackoverflow.com/questions/78634235/numpy-dtype-size-changed-may-indicate-binary-incompatibility-expected-96-from
+numpy = "1.26.4"
 pylint = "^3.3.1"
 pytest = "^8.3.3"
 wily = "^1.25.0"
