@@ -1,3 +1,3 @@
 """
-SCM platform fetcher classes.
+SCM platform repositories data fetcher classes.
 """

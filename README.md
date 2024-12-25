@@ -9,7 +9,9 @@
 Repo Maestro
 ------------
 
-Repo Maestro is a file generator using code repositories data rendered with a Jinja2 template.
+Repo Maestro is a code repositories configuration file manager.
+
+It fetches repositories data from GitHub, stored in a Repo Maestro configuration file, and then generates output files using Jinja2 templates rendered with the repositories data.
 
 Installation
 ------------
@@ -19,21 +21,45 @@ Installation
 Usage
 -----
 
-Initialise a Repo Maestro configuration file with GitHub repositories:
+Initialise a Repo Maestro configuration file with GitHub repositories data:
 
     GITHUB_TOKEN=<github_token> repomaestro init --conf-file .repomaestro.yaml --github-id cliffano
 
-Please note that the fetched GitHub repositories are based on the ones accessible by the provided `GITHUB_TOKEN`, which can include repositories owned by multiple users and orgs.
+Please note that the fetched GitHub repositories data are based on the ones accessible using the provided `GITHUB_TOKEN`, which can include repositories owned by multiple users and orgs.
 
-When `--github-id` flag is provided, only the repositories owned by the specified user or org will be included in Repo Maestro configuration file.
+When `--github-ids` flag is provided, only the repositories owned by the specified user or org will be included in Repo Maestro configuration file.
 
 Generate output file based on a Jinja2 template:
 
-    repomaestro gen --conf-file .repomaestro.yaml --template-file some-template.j2 --out-file some-output.json
+    repomaestro gen --conf-file path/to/.repomaestro.yaml --template-file path/to/some-template.j2 --out-file path/to/some-output.json
 
 Show help guide:
 
     repomaestro --help
+
+### Templates
+
+Template parameters:
+
+| Parameter | Description |
+|-----------|-------------|
+| `repos` | Repositories data with repository name as key and map of `git_url`, `homepage`, and `keywords`, as value. |
+
+The `repos` parameter can then be used in Jinja2 templates like this:
+
+```jinja2
+{
+  "repos": {
+    {% for repo_name, repo_data in repos.items() %}
+    "{{ repo_name }}": {
+      "git_url": "{{ repo_data.git_url }}",
+      "homepage": "{{ repo_data.homepage }}",
+      "keywords": {{ repo_data.keywords }}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  }
+}
+```
 
 Colophon
 --------
