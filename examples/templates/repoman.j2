@@ -1,0 +1,7 @@
+{
+{% for repo_name, repo_data in repos.items() %}
+  "{{ repo_name }}": {
+    "url": "{{ repo_data.git_url }}"
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+}

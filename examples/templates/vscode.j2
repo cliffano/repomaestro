@@ -1,0 +1,10 @@
+{
+  "folders": [
+    {% for repo_name, repo_data in repos.items() %}
+      {
+        "path": "{{ pwd }}/{{ repo_name }}"
+      }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "settings": {}
+}
