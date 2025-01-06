@@ -35,7 +35,11 @@ def init_config(conf_file: str, github_token: str, github_ids: list) -> None:
 
 
 def gen_file(
-    conf_file: str, template_file: str, out_file: str, include_keywords_list: list
+    conf_file: str,
+    template_file: str,
+    out_file: str,
+    include_keywords_list: list,
+    exclude_keywords_list: list,
 ) -> None:
     """Generate an output file using Repo Maestro data rendered with a Jinja2 template file"""
 
@@ -47,6 +51,7 @@ def gen_file(
             k: v
             for k, v in params.items()
             if all(x in v["keywords"] for x in include_keywords_list)
+            and not any(x in v["keywords"] for x in exclude_keywords_list)
         }
 
     env = Environment(loader=FileSystemLoader("."))
@@ -97,14 +102,27 @@ def init(conf_file: str, github_ids: str) -> None:
     type=str,
     help="Comma-separated list keywords of repositories to be included",
 )
+@click.option(
+    "--exclude-keywords",
+    show_default=False,
+    type=str,
+    help="Comma-separated list keywords of repositories to be excluded",
+)
 @click.option("--out-file", show_default=False, type=str, help="Output file")
 def gen(
-    conf_file: str, template_file: str, include_keywords: str, out_file: str
+    conf_file: str,
+    template_file: str,
+    include_keywords: str,
+    exclude_keywords: str,
+    out_file: str,
 ) -> None:
     """Generate output file from repositories data in Repo Maestro configuration file"""
     conf_file = conf_file if conf_file else DEFAULT_CONF_FILE
     include_keywords_list = include_keywords.split(",") if include_keywords else []
-    gen_file(conf_file, template_file, out_file, include_keywords_list)
+    exclude_keywords_list = exclude_keywords.split(",") if exclude_keywords else []
+    gen_file(
+        conf_file, template_file, out_file, include_keywords_list, exclude_keywords_list
+    )
 
 
 @click.group()

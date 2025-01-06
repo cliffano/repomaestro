@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add --exclude-keywords flag to gen-file command
+
 ### Changed
 - Rename flag --filter-keywords to --include-keywords
 - Upgrade PieMaker to 1.8.0
