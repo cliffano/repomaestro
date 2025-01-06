@@ -60,7 +60,7 @@ def gen_file(
 
     with open(out_file, "w", encoding="utf-8") as output_stream:
         output_stream.write(content)
-    logger.info(f"Generated content written to {out_file}")
+    logger.info(f"Generated output file written to {out_file}")
 
 
 @click.command()
