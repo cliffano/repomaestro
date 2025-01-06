@@ -35,18 +35,18 @@ def init_config(conf_file: str, github_token: str, github_ids: list) -> None:
 
 
 def gen_file(
-    conf_file: str, template_file: str, out_file: str, filter_keywords_list: list
+    conf_file: str, template_file: str, out_file: str, include_keywords_list: list
 ) -> None:
     """Generate an output file using Repo Maestro data rendered with a Jinja2 template file"""
 
     logger = init_logger()
     params = read_config(conf_file)
 
-    if filter_keywords_list:
+    if include_keywords_list:
         params = {
             k: v
             for k, v in params.items()
-            if all(x in v["keywords"] for x in filter_keywords_list)
+            if all(x in v["keywords"] for x in include_keywords_list)
         }
 
     env = Environment(loader=FileSystemLoader("."))
@@ -92,19 +92,19 @@ def init(conf_file: str, github_ids: str) -> None:
     help="Jinja2 template file",
 )
 @click.option(
-    "--filter-keywords",
+    "--include-keywords",
     show_default=False,
     type=str,
-    help="Comma-separated list of keywords to filter repositories",
+    help="Comma-separated list keywords of repositories to be included",
 )
 @click.option("--out-file", show_default=False, type=str, help="Output file")
 def gen(
-    conf_file: str, template_file: str, filter_keywords: str, out_file: str
+    conf_file: str, template_file: str, include_keywords: str, out_file: str
 ) -> None:
     """Generate output file from repositories data in Repo Maestro configuration file"""
     conf_file = conf_file if conf_file else DEFAULT_CONF_FILE
-    filter_keywords_list = filter_keywords.split(",") if filter_keywords else []
-    gen_file(conf_file, template_file, out_file, filter_keywords_list)
+    include_keywords_list = include_keywords.split(",") if include_keywords else []
+    gen_file(conf_file, template_file, out_file, include_keywords_list)
 
 
 @click.group()

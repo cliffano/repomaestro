@@ -22,11 +22,11 @@ repomaestro gen --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templ
 repomaestro gen --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/vscode.j2 --out-file ${STAGE_DIR}/vscode.json
 
 printf "\n\n========================================\n"
-printf "Run gen command with specified config file and filter keywords:"
-repomaestro gen --filter-keywords ansible --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/repoman.j2 --out-file ${STAGE_DIR}/repoman-filtered.json
-repomaestro gen --filter-keywords ansible --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/vscode.j2 --out-file ${STAGE_DIR}/vscode-filtered.json
+printf "Run gen command with specified config file and include keywords:"
+repomaestro gen --include-keywords ansible --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/repoman.j2 --out-file ${STAGE_DIR}/repoman-filtered.json
+repomaestro gen --include-keywords ansible --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/vscode.j2 --out-file ${STAGE_DIR}/vscode-filtered.json
 
 printf "\n\n========================================\n"
-printf "Run gen command with specified config file and multi filter keywords:"
-repomaestro gen --filter-keywords aws,cli --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/repoman.j2 --out-file ${STAGE_DIR}/repoman-filtered-multi.json
-repomaestro gen --filter-keywords aws,cli --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/vscode.j2 --out-file ${STAGE_DIR}/vscode-filtered-multi.json
+printf "Run gen command with specified config file and multi include keywords:"
+repomaestro gen --include-keywords aws,cli --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/repoman.j2 --out-file ${STAGE_DIR}/repoman-filtered-multi.json
+repomaestro gen --include-keywords aws,cli --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file templates/vscode.j2 --out-file ${STAGE_DIR}/vscode-filtered-multi.json
