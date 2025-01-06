@@ -4,7 +4,7 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 1.7.0
+PIEMAKER_VERSION = 1.8.0
 
 ################################################################
 # User configuration variables
@@ -47,9 +47,9 @@ clean:
 
 # Retrieve the Pyhon package dependencies
 deps:
-	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install poetry --ignore-installed
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry==1.8.5 --ignore-installed
 	python3 -m venv ${VIRTUAL_ENV} && PATH=${POETRY_HOME}/bin/:$$PATH poetry install --no-root --compile
-	poetry self add poetry-plugin-up
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry-plugin-up==0.8.0 --ignore-installed
 
 deps-upgrade:
 	poetry up --latest
