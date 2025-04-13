@@ -29,6 +29,15 @@
         "statement": 0,
         "warning": 0
       },
+      "repomaestro.platform.github": {
+        "convention": 0,
+        "error": 0,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 0,
+        "statement": 15,
+        "warning": 0
+      },
       "repomaestro.platform.__init__": {
         "convention": 0,
         "error": 0,
@@ -38,13 +47,13 @@
         "statement": 0,
         "warning": 0
       },
-      "repomaestro.platform.github": {
+      "repomaestro.config": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 15,
+        "statement": 14,
         "warning": 0
       },
       "repomaestro.__init__": {
@@ -65,13 +74,13 @@
         "statement": 5,
         "warning": 0
       },
-      "repomaestro.config": {
+      "tests.test_logger": {
         "convention": 0,
         "error": 0,
         "fatal": 0,
         "info": 0,
         "refactor": 0,
-        "statement": 14,
+        "statement": 7,
         "warning": 0
       },
       "tests.__init__": {
@@ -81,15 +90,6 @@
         "info": 0,
         "refactor": 0,
         "statement": 0,
-        "warning": 0
-      },
-      "tests.test_logger": {
-        "convention": 0,
-        "error": 0,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 0,
-        "statement": 7,
         "warning": 0
       },
       "tests-integration.test_cli": {
