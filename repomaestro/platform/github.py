@@ -24,7 +24,8 @@ def get_repos_data(github_token: str, github_ids: list) -> dict:
     for repo in g.get_user().get_repos():
         if github_ids == [] or repo.owner.login in github_ids:
             logger.info(f"- {repo.name}")
-            # Complete list of PyGithub Repository: https://pygithub.readthedocs.io/en/stable/github_objects/Repository.html
+            # Complete list of PyGithub Repository:
+            # https://pygithub.readthedocs.io/en/stable/github_objects/Repository.html
             data[repo.name] = {
                 "homepage": repo.homepage,
                 "keywords": repo.topics,
