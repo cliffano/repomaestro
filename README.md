@@ -43,7 +43,7 @@ Template parameters:
 
 | Parameter | Description |
 |-----------|-------------|
-| `repos` | Repositories data with repository name as key and repository properties such as `git_url`, `homepage`, and `keywords`, as value. Complete list of repository properties are documented on [PyGithub Repository](https://pygithub.readthedocs.io/en/stable/github_objects/Repository.html) |
+| `repos` | Repositories data with repository name as key and a map of repository properties `git_url`, `homepage`, `keywords`, and `ssh_url` as values. |
 
 The `repos` parameter can then be used in Jinja2 templates like this:
 
