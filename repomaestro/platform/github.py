@@ -30,7 +30,7 @@ def get_repos_data(github_token: str, github_ids: list) -> dict:
                 "homepage": repo.homepage,
                 "keywords": repo.topics,
                 "git_url": repo.git_url,
-                "ssh_url": repo.ssh_url
+                "ssh_url": repo.ssh_url,
             }
         else:
             logger.info(f"- {repo.name} (skipped)")
