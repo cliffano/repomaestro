@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="index.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.8.0">coverage.py v7.8.0</a>,
-            created at 2025-04-18 01:01 +0000
+            created at 2025-04-18 07:01 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -105,7 +105,7 @@
     <p class="mis show_mis"><span class="n"><a id="t23" href="#t23">23</a></span><span class="t">    <span class="nam">data</span> <span class="op">=</span> <span class="op">{</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t">    <span class="key">for</span> <span class="nam">repo</span> <span class="key">in</span> <span class="nam">g</span><span class="op">.</span><span class="nam">get_user</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_repos</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t25" href="#t25">25</a></span><span class="t">        <span class="key">if</span> <span class="nam">github_ids</span> <span class="op">==</span> <span class="op">[</span><span class="op">]</span> <span class="key">or</span> <span class="nam">repo</span><span class="op">.</span><span class="nam">owner</span><span class="op">.</span><span class="nam">login</span> <span class="key">in</span> <span class="nam">github_ids</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t26" href="#t26">26</a></span><span class="t">            <span class="nam">logger</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="fst">f"</span><span class="fst">- </span><span class="op">{</span><span class="nam">repo</span><span class="op">.</span><span class="nam">name</span><span class="op">}</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t26" href="#t26">26</a></span><span class="t">            <span class="nam">logger</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="str">f"- {repo.name}"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t27" href="#t27">27</a></span><span class="t">            <span class="com"># Complete list of PyGithub Repository:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t28" href="#t28">28</a></span><span class="t">            <span class="com"># https://pygithub.readthedocs.io/en/stable/github_objects/Repository.html</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t29" href="#t29">29</a></span><span class="t">            <span class="com"># NOTE: We want to restrict the key names here as future standardisation</span>&nbsp;</span><span class="r"></span></p>
@@ -119,7 +119,7 @@
     <p class="pln"><span class="n"><a id="t37" href="#t37">37</a></span><span class="t">                <span class="str">"ssh_url"</span><span class="op">:</span> <span class="nam">repo</span><span class="op">.</span><span class="nam">git_url</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">"git:"</span><span class="op">,</span> <span class="str">"ssh:"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t38" href="#t38">38</a></span><span class="t">            <span class="op">}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t40" href="#t40">40</a></span><span class="t">            <span class="nam">logger</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="fst">f"</span><span class="fst">- </span><span class="op">{</span><span class="nam">repo</span><span class="op">.</span><span class="nam">name</span><span class="op">}</span><span class="fst"> (skipped)</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t40" href="#t40">40</a></span><span class="t">            <span class="nam">logger</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="str">f"- {repo.name} (skipped)"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t41" href="#t41">41</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t42" href="#t42">42</a></span><span class="t">    <span class="nam">g</span><span class="op">.</span><span class="nam">close</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t43" href="#t43">43</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -133,7 +133,7 @@
             <a class="nav" href="index.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.8.0">coverage.py v7.8.0</a>,
-            created at 2025-04-18 01:01 +0000
+            created at 2025-04-18 07:01 +0000
         </p>
     </div>
 </footer>

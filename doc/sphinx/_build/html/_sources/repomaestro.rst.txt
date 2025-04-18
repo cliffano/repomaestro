@@ -17,21 +17,21 @@ repomaestro.config module
 
 .. automodule:: repomaestro.config
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 repomaestro.logger module
 -------------------------
 
 .. automodule:: repomaestro.logger
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: repomaestro
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

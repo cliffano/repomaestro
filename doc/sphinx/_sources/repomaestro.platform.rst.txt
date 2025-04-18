@@ -9,13 +9,13 @@ repomaestro.platform.github module
 
 .. automodule:: repomaestro.platform.github
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: repomaestro.platform
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
