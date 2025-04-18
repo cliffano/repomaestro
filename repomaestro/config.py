@@ -1,5 +1,4 @@
-"""Configuration loader.
-"""
+"""Configuration loader."""
 
 import yaml
 from .logger import init

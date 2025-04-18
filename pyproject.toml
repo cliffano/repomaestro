@@ -22,33 +22,33 @@ classifiers = [
   "Operating System :: OS Independent"
 ]
 
-  [[tool.poetry.packages]]
-  include = "repomaestro"
+[[tool.poetry.packages]]
+include = "repomaestro"
 
-  [tool.poetry.scripts]
-  repomaestro = "repomaestro:cli"
+[tool.poetry.scripts]
+repomaestro = "repomaestro:cli"
 
-  [tool.poetry.dependencies]
-  python = "^3.10"
-  click = "^8.1.7"
-  conflog = "^2.0.1"
-  Jinja2 = "^3.1.2"
-  PyGithub = "^2.5.0"
-  PyYAML = "^6.0.2"
+[tool.poetry.dependencies]
+python = "^3.11"
+click = "^8.1.8"
+conflog = "^2.0.1"
+Jinja2 = "^3.1.6"
+PyGithub = "^2.6.1"
+PyYAML = "^6.0.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.10.0"
-twine = "^5.1.1"
-wheel = "^0.44.0"
+black = "^25.1.0"
+twine = "^6.1.0"
+wheel = "^0.45.1"
 
 [tool.poetry.group.test.dependencies]
-coverage = "^7.6.4"
+coverage = "^7.8.0"
 numpy = "1.26.4"
-pylint = "^3.3.1"
-pytest = "^8.3.3"
+pylint = "^3.3.6"
+pytest = "^8.3.5"
 wily = "^1.25.0"
 
 [tool.poetry.group.doc.dependencies]
-pylint-report = "^2.4.0"
+pylint-report = "^2.4.2"
 pytest-html = "^4.1.1"
-Sphinx = "^8.1.3"
+Sphinx = "^8.2.3"
