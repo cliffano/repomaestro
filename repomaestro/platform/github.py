@@ -26,11 +26,15 @@ def get_repos_data(github_token: str, github_ids: list) -> dict:
             logger.info(f"- {repo.name}")
             # Complete list of PyGithub Repository:
             # https://pygithub.readthedocs.io/en/stable/github_objects/Repository.html
+            # NOTE: We want to restrict the key names here as future standardisation
+            # between multiple SCM platforms.
             data[repo.name] = {
                 "homepage": repo.homepage,
                 "keywords": repo.topics,
                 "git_url": repo.git_url,
-                "ssh_url": repo.ssh_url,
+                # repo.ssh_url returns empty string
+                # hence relying on git_url with replaced protocol
+                "ssh_url": repo.git_url.replace("git:", "ssh:"),
             }
         else:
             logger.info(f"- {repo.name} (skipped)")
