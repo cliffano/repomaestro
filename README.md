@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/cliffano/repomaestro/workflows/CI/badge.svg)](https://github.com/cliffano/repomaestro/actions?query=workflow%3ACI)
 [![Security Status](https://snyk.io/test/github/cliffano/repomaestro/badge.svg)](https://snyk.io/test/github/cliffano/repomaestro)
-[![Dependencies Status](https://img.shields.io/librariesio/release/pypi/repomaestro)](https://libraries.io/github/cliffano/repomaestro)
+[![Dependencies Status](https://img.shields.io/librariesio/release/pypi/repomaestro)](https://libraries.io/pypi/repomaestro)
 [![Published Version](https://img.shields.io/pypi/v/repomaestro.svg)](https://pypi.python.org/pypi/repomaestro)
 <br/>
 
