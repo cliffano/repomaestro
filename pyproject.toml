@@ -7,7 +7,7 @@ no-binary = [ ":none:" ]
 
 [tool.poetry]
 name = "repomaestro"
-version = "1.1.1-pre.0"
+version = "2.0.0"
 description = "Code repositories conductor"
 license = "Apache-2.0"
 authors = [ "Cliffano Subagio <cliffano@gmail.com>" ]
@@ -22,19 +22,19 @@ classifiers = [
   "Operating System :: OS Independent"
 ]
 
-[[tool.poetry.packages]]
-include = "repomaestro"
+  [[tool.poetry.packages]]
+  include = "repomaestro"
 
-[tool.poetry.scripts]
-repomaestro = "repomaestro:cli"
+  [tool.poetry.scripts]
+  repomaestro = "repomaestro:cli"
 
-[tool.poetry.dependencies]
-python = "^3.11"
-click = "^8.1.8"
-conflog = "^2.0.1"
-Jinja2 = "^3.1.6"
-PyGithub = "^2.6.1"
-PyYAML = "^6.0.2"
+  [tool.poetry.dependencies]
+  python = "^3.11"
+  click = "^8.1.8"
+  conflog = "^2.0.1"
+  Jinja2 = "^3.1.6"
+  PyGithub = "^2.6.1"
+  PyYAML = "^6.0.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
