@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Change minimum Python to 3.11
+
 ### Fixed
 - Fix ssh_url due to empty value from PyGithub.Repository
 
