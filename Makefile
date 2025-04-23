@@ -4,7 +4,7 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 1.8.0
+PIEMAKER_VERSION = 1.9.0
 
 ################################################################
 # User configuration variables
@@ -27,7 +27,7 @@ $(info - Package name: ${PACKAGE_NAME})
 $(info - Author: ${AUTHOR})
 
 export POETRY_HOME := /opt/poetry
-export VIRTUAL_ENV := /opt/poetry-venv
+export VIRTUAL_ENV := .venv
 export PATH := ${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:$(PATH)
 
 ################################################################
@@ -57,6 +57,7 @@ deps-upgrade:
 deps-extra-apt:
 	apt-get update
 	apt-get install -y python3-venv
+	apt-get install -y python3-sphinx # needed by sphinx-apidoc
 
 # Update Makefile to the latest version tag
 update-to-latest: TARGET_PIEMAKER_VERSION = $(shell curl -s https://api.github.com/repos/cliffano/piemaker/tags | jq -r '.[0].name')

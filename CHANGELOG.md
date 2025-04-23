@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Upgrade PieMaker to 1.9.0
+
 ## 2.0.0 - 2025-04-18
 ### Changed
 - Change minimum Python to 3.11
