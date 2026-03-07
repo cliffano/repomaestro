@@ -126,6 +126,7 @@ def gen(
 
 
 @click.group()
+@click.version_option(package_name="repomaestro", prog_name="repomaestro")
 def cli():
     """Repo Maestro CLI"""
 
