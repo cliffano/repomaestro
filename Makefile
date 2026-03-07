@@ -4,7 +4,7 @@
 ################################################################
 
 # PieMaker's version number
-PIEMAKER_VERSION = 1.9.0
+PIEMAKER_VERSION = 2.2.1
 
 ################################################################
 # User configuration variables
@@ -30,6 +30,10 @@ export POETRY_HOME := /opt/poetry
 export VIRTUAL_ENV := .venv
 export PATH := ${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:$(PATH)
 
+define python_venv
+	. .venv/bin/activate && $(1)
+endef
+
 ################################################################
 # Base targets
 
@@ -47,17 +51,23 @@ clean:
 
 # Retrieve the Pyhon package dependencies
 deps:
-	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry==1.8.5 --ignore-installed
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry==2.3.2 --ignore-installed
 	python3 -m venv ${VIRTUAL_ENV} && PATH=${POETRY_HOME}/bin/:$$PATH poetry install --no-root --compile
-	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry-plugin-up==0.8.0 --ignore-installed
+	python3 -m venv ${POETRY_HOME} && ${POETRY_HOME}/bin/pip install --force-reinstall poetry-plugin-up==0.9.0 --ignore-installed
+	$(call python_venv,poetry self add poetry-plugin-export)
+	$(call python_venv,poetry export -f requirements.txt --without-hashes --with dev --output requirements.txt)
 
 deps-upgrade:
-	poetry up --latest
+	$(call python_venv,poetry up --latest)
 
 deps-extra-apt:
 	apt-get update
 	apt-get install -y python3-venv
 	apt-get install -y python3-sphinx # needed by sphinx-apidoc
+
+rmdeps:
+	rm -f poetry.lock requirements.txt
+	rm -rf .venv/
 
 # Update Makefile to the latest version tag
 update-to-latest: TARGET_PIEMAKER_VERSION = $(shell curl -s https://api.github.com/repos/cliffano/piemaker/tags | jq -r '.[0].name')
@@ -71,37 +81,67 @@ update-to-main:
 update-to-version:
 	curl https://raw.githubusercontent.com/cliffano/piemaker/$(TARGET_PIEMAKER_VERSION)/src/Makefile-piemaker -o Makefile
 
+# Update dotfiles using the generator-python
+update-dotfiles: GENERATOR_COMPONENT = $(shell yq .generator.component piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_PROJECT_ID = $(shell yq .generator.inputs.project_id piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_PROJECT_NAME = $(shell yq .generator.inputs.project_name piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_PROJECT_DESC = $(shell yq .generator.inputs.project_desc piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_AUTHOR_NAME = $(shell yq .generator.inputs.author_name piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_AUTHOR_EMAIL = $(shell yq .generator.inputs.author_email piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_GITHUB_ID = $(shell yq .generator.inputs.github_id piemaker.yml)
+update-dotfiles: GENERATOR_INPUTS_GITHUB_REPO = $(shell yq .generator.inputs.github_repo piemaker.yml)
+update-dotfiles: stage
+	cd stage/ && \
+	  rm -rf generator-python/ && \
+	  git clone https://github.com/cliffano/generator-python && \
+	  cd generator-python && \
+	  make deps && \
+	  node_modules/.bin/plop $(GENERATOR_COMPONENT) -- \
+	    --project_id "$(GENERATOR_INPUTS_PROJECT_ID)" \
+		--project_name "$(GENERATOR_INPUTS_PROJECT_NAME)" \
+		--project_desc "$(GENERATOR_INPUTS_PROJECT_DESC)" \
+		--author_name "$(GENERATOR_INPUTS_AUTHOR_NAME)" \
+		--author_email "$(GENERATOR_INPUTS_AUTHOR_EMAIL)" \
+		--github_id "$(GENERATOR_INPUTS_GITHUB_ID)" \
+		--github_repo "$(GENERATOR_INPUTS_GITHUB_REPO)"
+	cd stage/generator-python/stage/$(GENERATOR_COMPONENT) && \
+	  cp -R .github/* ../../../../.github/ && \
+	  cp .coveragerc ../../../../.coveragerc && \
+	  cp .gitignore ../../../../.gitignore && \
+	  cp .pylintrc ../../../../.pylintrc && \
+	  cp .rtk.json ../../../../.rtk.json
+
 ################################################################
 # Formatting targets
 
 style:
-	black $(PACKAGE_NAME) tests tests-integration examples
+	$(call python_venv,black $(PACKAGE_NAME) tests tests-integration examples)
 
 ################################################################
 # Testing targets
 
 lint: stage
 	rm -rf docs/lint/pylint/ stage/lint/ && mkdir -p docs/lint/pylint/ stage/lint/
-	pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo)
-	pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo) --output-format=pylint_report.CustomJsonReporter > docs/lint/pylint/report.json
-	pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html
+	$(call python_venv,pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo))
+	$(call python_venv,pylint $(shell find $(PACKAGE_NAME) -type f -regex ".*\.py" | xargs echo) $(shell find tests/ -type f -regex ".*\.py" | xargs echo) $(shell find tests-integration/ -type f -regex ".*\.py" | xargs echo) --output-format=pylint_report.CustomJsonReporter > docs/lint/pylint/report.json)
+	$(call python_venv,pylint_report docs/lint/pylint/report.json -o docs/lint/pylint/index.html)
 
 complexity: stage
-	rm -rf docs/complexity/wily/ stage/complexity/ && mkdir -p docs/complexity/wily/ stage/complexity/
-	wily clean -y
-	wily build $(PACKAGE_NAME)/
-	wily report --format HTML --output docs/complexity/wily/index.html $(PACKAGE_NAME)/__init__.py
-	wily list-metrics
+	rm -rf docs/complexity/radon/ stage/complexity/ && mkdir -p docs/complexity/radon/ stage/complexity/
+	$(call python_venv,radon mi $(PACKAGE_NAME)/) 2>&1 | tee -a docs/complexity/radon/report.txt
+	$(call python_venv,radon cc -s -a $(PACKAGE_NAME)/) 2>&1 | tee -a docs/complexity/radon/report.txt
+	$(call python_venv,cat docs/complexity/radon/report.txt | ansi2html) > docs/complexity/radon/index.html
 
 test:
 	rm -rf docs/test/pytest/ stage/test/ && mkdir -p docs/test/pytest/ stage/test/
-	pytest -v tests --html=docs/test/pytest/index.html --self-contained-html --capture=no
+	$(call python_venv,pytest -v tests --html=docs/test/pytest/index.html --self-contained-html --capture=no)
 
 test-integration:
 	rm -rf docs/test-integration/pytest/ stage/test-integration/ && mkdir -p docs/test-integration/pytest/ stage/test-integration/
-	pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html --capture=no
+	$(call python_venv,pytest -v tests-integration --html=docs/test-integration/pytest/index.html --self-contained-html --capture=no)
 
 test-examples:
+	mkdir -p stage/test-examples/
 	cd examples && \
 	for f in *.sh; do \
 	  bash -x "$$f"; \
@@ -109,10 +149,10 @@ test-examples:
 
 coverage:
 	rm -rf docs/coverage/coverage/ stage/coverage/ && mkdir -p docs/coverage/coverage/ stage/coverage/
-	COVERAGE_FILE=.coverage.unit coverage run --source=./$(PACKAGE_NAME) -m unittest discover -s tests
-	coverage combine
-	coverage report
-	coverage html && rm -f docs/coverage/coverage/.gitignore
+	$(call python_venv,COVERAGE_FILE=.coverage.unit coverage run --source=./$(PACKAGE_NAME) -m unittest discover -s tests)
+	$(call python_venv,coverage combine)
+	$(call python_venv,coverage report)
+	$(call python_venv,coverage html && rm -f docs/coverage/coverage/.gitignore)
 
 ################################################################
 # Release targets
@@ -130,32 +170,32 @@ release-patch:
 # Packaging, installation, and publishing targets
 
 package:
-	poetry build
+	$(call python_venv,poetry build)
 
 install: package
-	poetry install
+	$(call python_venv,poetry install)
 
 install-wheel: package
-	pip3 install dist/$(PACKAGE_NAME)-*.whl
+	$(call python_venv,pip3 install dist/$(PACKAGE_NAME)-*.whl)
 
 uninstall:
-	pip3 uninstall $(PACKAGE_NAME) -y || echo "Nothing to uninstall..."
+	$(call python_venv,pip3 uninstall $(PACKAGE_NAME) -y || echo "Nothing to uninstall...")
 
 reinstall: uninstall install
 
 publish:
-	poetry publish --username __token__ --password $(PASSWORD)
+	$(call python_venv,poetry publish --username __token__ --password $(PASSWORD))
 
 ################################################################
 # Documentation targets
 
 doc: stage
 	rm -rf docs/doc/sphinx/ stage/doc/ && mkdir -p docs/doc/sphinx/ stage/doc/
-	sphinx-apidoc -o docs/doc/sphinx/ --full -H "$(PACKAGE_NAME)" -A "$(AUTHOR)" $(PACKAGE_NAME) && \
+	$(call python_venv,sphinx-apidoc -o docs/doc/sphinx/ --full -H "$(PACKAGE_NAME)" -A "$(AUTHOR)" $(PACKAGE_NAME) && \
 		cd docs/doc/sphinx/ && \
 		make html && \
-		cp -R _build/html/* ../../../docs/doc/sphinx/
+		cp -R _build/html/* ../../../docs/doc/sphinx/)
 
 ################################################################
 
-.PHONY: all ci clean complexity configurations coverage deps deps-extra-apt deps-upgrade doc export export export install install-wheel lint name package package publish reinstall release-major release-minor release-patch stage style test test-examples test-integration uninstall update-to-latest update-to-latest update-to-main update-to-version
+.PHONY: all ci clean complexity configurations coverage deps deps-extra-apt deps-upgrade rmdeps doc export export export install install-wheel lint name package package publish reinstall release-major release-minor release-patch stage style test test-examples test-integration uninstall update-to-latest update-to-latest update-to-main update-to-version

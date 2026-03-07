@@ -29,7 +29,7 @@ classifiers = [
   repomaestro = "repomaestro:cli"
 
   [tool.poetry.dependencies]
-  python = "^3.11"
+  python = "^3.10"
   click = "^8.1.8"
   conflog = "^2.0.1"
   Jinja2 = "^3.1.6"
