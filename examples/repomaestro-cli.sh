@@ -12,6 +12,10 @@ printf "Show help guide:\n"
 repomaestro --help
 
 printf "\n\n========================================\n"
+printf "Show version info: repomaestro --version\n"
+repomaestro --version
+
+printf "\n\n========================================\n"
 printf "Run command with no arg:\n"
 repomaestro
 
