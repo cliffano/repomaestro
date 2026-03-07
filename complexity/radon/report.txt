@@ -1,0 +1,21 @@
+repomaestro/logger.py - A
+repomaestro/__init__.py - A
+repomaestro/config.py - A
+repomaestro/platform/github.py - A
+repomaestro/platform/__init__.py - A
+repomaestro/logger.py
+    F 6:0 init - A (1)
+repomaestro/__init__.py
+    F 37:0 gen_file - B (7)
+    F 112:0 gen - A (4)
+    F 17:0 init_config - A (3)
+    F 77:0 init - A (3)
+    F 130:0 cli - A (1)
+repomaestro/config.py
+    F 7:0 read - A (1)
+    F 20:0 write - A (1)
+repomaestro/platform/github.py
+    F 10:0 get_repos_data - A (4)
+
+9 blocks (classes, functions, methods) analyzed.
+Average complexity: A (2.7777777777777777)
