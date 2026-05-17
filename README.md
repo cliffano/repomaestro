@@ -1,25 +1,21 @@
-<img align="right" src="https://raw.github.com/cliffano/repomaestro/main/avatar.jpg" alt="Avatar"/>
+![Avatar](avatar.jpg)
 
 [![Build Status](https://github.com/cliffano/repomaestro/workflows/CI/badge.svg)](https://github.com/cliffano/repomaestro/actions?query=workflow%3ACI)
 [![Security Status](https://snyk.io/test/github/cliffano/repomaestro/badge.svg)](https://snyk.io/test/github/cliffano/repomaestro)
 [![Dependencies Status](https://img.shields.io/librariesio/release/pypi/repomaestro)](https://libraries.io/pypi/repomaestro)
 [![Published Version](https://img.shields.io/pypi/v/repomaestro.svg)](https://pypi.python.org/pypi/repomaestro)
-<br/>
 
-Repo Maestro
-------------
+# Repo Maestro
 
 Repo Maestro is a code repositories configuration file manager.
 
 It fetches repositories data from GitHub, stored in a Repo Maestro configuration file, and then generates output files using Jinja2 templates rendered with the repositories data.
 
-Installation
-------------
+## Installation
 
     pip3 install repomaestro
 
-Usage
------
+## Usage
 
 Initialise a Repo Maestro configuration file with GitHub repositories data:
 
@@ -61,8 +57,7 @@ The `repos` parameter can then be used in Jinja2 templates like this:
 }
 ```
 
-Colophon
---------
+## Colophon
 
 [Developer's Guide](https://cliffano.github.io/developers_guide.html#python)
 
