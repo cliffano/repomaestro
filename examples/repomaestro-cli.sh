@@ -24,6 +24,14 @@ printf "Run init command with specified config file and Github ID:"
 GITHUB_TOKEN=${STUDIO_GITHUB_TOKEN} repomaestro init --conf-file ${STAGE_DIR}/.repomaestro.yaml --github-ids cliffano
 
 printf "\n\n========================================\n"
+printf "Run init command with Azure orgs (all projects):"
+AZURE_TOKEN=${STUDIO_AZURE_TOKEN} repomaestro init --conf-file ${STAGE_DIR}/.repomaestro-azure.yaml --azure-ids myorg
+
+printf "\n\n========================================\n"
+printf "Run init command with Azure orgs and specific projects:"
+AZURE_TOKEN=${STUDIO_AZURE_TOKEN} repomaestro init --conf-file ${STAGE_DIR}/.repomaestro-azure-projects.yaml --azure-ids myorg --azure-projects ProjectA,ProjectB
+
+printf "\n\n========================================\n"
 printf "Run gen command with specified config file:"
 repomaestro gen --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file examples/templates/repoman.j2 --out-file ${STAGE_DIR}/repoman.json
 repomaestro gen --conf-file ${STAGE_DIR}/.repomaestro.yaml --template-file examples/templates/vscode.j2 --out-file ${STAGE_DIR}/vscode.json

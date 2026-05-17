@@ -10,28 +10,51 @@ from jinja2 import Environment, FileSystemLoader
 from .config import read as read_config, write as write_config
 from .logger import init as init_logger
 from .platform.github import get_repos_data as get_github_repos_data
+from .platform.azure import get_repos_data as get_azure_repos_data
 
 DEFAULT_CONF_FILE = f'{os.environ["HOME"]}/.repomaestro.yaml'
 
 
-def init_config(conf_file: str, github_token: str, github_ids: list) -> None:
+def init_config(
+    conf_file: str,
+    github_token: str,
+    github_ids: list,
+    azure_token: str,
+    azure_ids: list,
+    azure_projects: list,
+) -> None:
     """Initialise Repo Maestro configuration from SCM platforms"""
 
     logger = init_logger()
     repos_data = {}
 
-    if github_ids != []:
+    if github_ids:
+        if github_token:
+            logger.info("Retrieving repos data from GitHub...")
+            github_repos_data = get_github_repos_data(github_token, github_ids)
+            repos_data.update(github_repos_data)
+        else:
+            logger.warning("Skipping GitHub repositories. GITHUB_TOKEN is not set.")
 
-        logger.info("Retrieving repos data from GitHub...")
-        github_repos_data = get_github_repos_data(github_token, github_ids)
-        repos_data.update(github_repos_data)
+    if azure_ids:
+        if azure_token:
+            logger.info("Retrieving repos data from Azure DevOps...")
+            azure_repos_data = get_azure_repos_data(
+                azure_token, azure_ids, azure_projects
+            )
+            repos_data.update(azure_repos_data)
+        else:
+            logger.warning(
+                "Skipping Azure DevOps repositories. AZURE_TOKEN is not set."
+            )
 
-        if repos_data:
-            write_config(conf_file, repos_data)
-            logger.info(f"Repo Maestro configuration written to {conf_file}")
-
+    if repos_data:
+        write_config(conf_file, repos_data)
+        logger.info(f"Repo Maestro configuration written to {conf_file}")
     else:
-        logger.warning("Skipping configuration initialisation. No GitHub ID provided.")
+        logger.warning(
+            "Skipping configuration initialisation. No repositories were processed."
+        )
 
 
 def gen_file(
@@ -74,12 +97,34 @@ def gen_file(
 @click.option(
     "--github-ids", show_default=False, type=str, help="Comma-separated GitHub IDs"
 )
-def init(conf_file: str, github_ids: str) -> None:
+@click.option(
+    "--azure-ids",
+    show_default=False,
+    type=str,
+    help="Comma-separated Azure DevOps organisation IDs",
+)
+@click.option(
+    "--azure-projects",
+    show_default=False,
+    type=str,
+    help="Comma-separated Azure DevOps project names (default: all projects)",
+)
+def init(conf_file: str, github_ids: str, azure_ids: str, azure_projects: str) -> None:
     """Initialise Repo Maestro configuration file"""
     conf_file = conf_file if conf_file else DEFAULT_CONF_FILE
     github_token = os.getenv("GITHUB_TOKEN")
     github_ids_list = github_ids.split(",") if github_ids else []
-    init_config(conf_file, github_token, github_ids_list)
+    azure_token = os.getenv("AZURE_TOKEN")
+    azure_ids_list = azure_ids.split(",") if azure_ids else []
+    azure_projects_list = azure_projects.split(",") if azure_projects else []
+    init_config(
+        conf_file,
+        github_token,
+        github_ids_list,
+        azure_token,
+        azure_ids_list,
+        azure_projects_list,
+    )
 
 
 @click.command()

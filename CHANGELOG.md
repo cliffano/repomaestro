@@ -6,12 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add Azure platform support
+
 ## 2.1.0 - 2026-03-07
 ### Added
 - Add --version flag to show version info
 
 ### Changed
-- Upgrade PieMaker to 2.2.1
+- Upgrade PieMaker to 2.3.0
 
 ## 2.0.0 - 2025-04-18
 ### Changed
